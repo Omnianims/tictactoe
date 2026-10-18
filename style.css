@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800&display=swap');
+
+:root {
+  --bg: #070b17;
+  --panel: rgba(17, 24, 39, 0.9);
+  --grid: #d8d9dc;
+  --x: #d7a9ff;
+  --o: #86f7d0;
+  --shadow: rgba(0, 0, 0, 0.38);
+  --text: #edf2ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at top, rgba(122, 92, 255, 0.2), transparent 30%),
+    linear-gradient(135deg, #040814, var(--bg));
+  color: var(--text);
+  font-family: 'Orbitron', sans-serif;
+}
+
+.game-wrap {
+  width: min(90vw, 420px);
+  display: grid;
+  gap: 1rem;
+}
+
+.title-section {
+  text-align: center;
+}
+
+.title-section h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  letter-spacing: 0.08em;
+  text-transform: none;
+  background: linear-gradient(
+    90deg,
+    #ff4d4d,
+    #ffb84d,
+    #ffe066,
+    #66ff99,
+    #4dd0ff,
+    #7b7dff,
+    #ff6fe8
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.15);
+}
+
+.game {
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  padding: 1.5rem;
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(80px, 1fr));
+  gap: 0.45rem;
+  width: min(72vw, 300px);
+  aspect-ratio: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 18px;
+  padding: 0.5rem;
+}
+
+.cell {
+  border: 0;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.cell:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.cell:disabled {
+  cursor: default;
+}
+
+.cell:focus-visible,
+.reset:focus-visible {
+  outline: 2px solid var(--x);
+  outline-offset: 2px;
+}
+
+.cell[data-value='X'],
+.cell.text-x {
+  color: var(--x);
+}
+
+.cell[data-value='O'],
+.cell.text-o {
+  color: var(--o);
+}
+
+.status {
+  min-height: 1.5em;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.reset {
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--x), var(--o));
+  color: #05070d;
+  padding: 0.8rem 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.reset:hover {
+  transform: translateY(-2px);
+}
+
+.contact-section {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.contact-toggle {
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff4d4d, #ffb84d, #ffe066, #66ff99, #4dd0ff, #7b7dff, #ff6fe8);
+  color: #05070d;
+  padding: 0.8rem 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.contact-toggle:hover {
+  transform: translateY(-2px);
+}
+
+.contact-number {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.7rem 1rem;
+}
+
+.whatsapp-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}

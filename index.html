@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-wrap">
+      <header class="title-section">
+        <h1>Ay's TicTacToe</h1>
+      </header>
+      <div class="game" aria-label="Tic tac toe game">
+        <div class="board" id="board" aria-label="Game board">
+          <button class="cell" type="button" data-index="0" aria-label="Cell 1"></button>
+          <button class="cell" type="button" data-index="1" aria-label="Cell 2"></button>
+          <button class="cell" type="button" data-index="2" aria-label="Cell 3"></button>
+          <button class="cell" type="button" data-index="3" aria-label="Cell 4"></button>
+          <button class="cell" type="button" data-index="4" aria-label="Cell 5"></button>
+          <button class="cell" type="button" data-index="5" aria-label="Cell 6"></button>
+          <button class="cell" type="button" data-index="6" aria-label="Cell 7"></button>
+          <button class="cell" type="button" data-index="7" aria-label="Cell 8"></button>
+          <button class="cell" type="button" data-index="8" aria-label="Cell 9"></button>
+        </div>
+
+        <div class="status" id="status" aria-live="polite">Player X's turn</div>
+        <button class="reset" id="reset" type="button">Reset game</button>
+      </div>
+
+      <section class="contact-section" aria-label="Contact me">
+        <button class="contact-toggle" id="contactToggle" type="button">Contact me</button>
+        <div class="contact-number" id="contactNumber">
+          <span class="whatsapp-icon" aria-hidden="true">💬</span>
+          <span>+234-808-9823667</span>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const cells = [...document.querySelectorAll('.cell')];
+      const statusEl = document.getElementById('status');
+      const resetBtn = document.getElementById('reset');
+      const contactToggle = document.getElementById('contactToggle');
+      const contactNumber = document.getElementById('contactNumber');
+
+      contactToggle.addEventListener('click', () => {
+        contactNumber.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      const winPatterns = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+      ];
+
+      let board = Array(9).fill('');
+      let currentPlayer = 'X';
+      let gameOver = false;
+
+      function getWinner(boardState) {
+        for (const pattern of winPatterns) {
+          const [a, b, c] = pattern;
+          if (boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c]) {
+            return boardState[a];
+          }
+        }
+        return null;
+      }
+
+      function updateStatus(message) {
+        statusEl.textContent = message;
+      }
+
+      function renderBoard() {
+        cells.forEach((cell, index) => {
+          const value = board[index];
+          cell.textContent = value;
+          cell.dataset.value = value;
+          cell.disabled = value !== '' || gameOver;
+        });
+      }
+
+      function resetGame() {
+        board = Array(9).fill('');
+        currentPlayer = 'X';
+        gameOver = false;
+        updateStatus("Player X's turn");
+        renderBoard();
+      }
+
+      function handleMove(index) {
+        if (board[index] || gameOver) {
+          return;
+        }
+
+        board[index] = currentPlayer;
+        const winner = getWinner(board);
+
+        if (winner) {
+          gameOver = true;
+          updateStatus(`Player ${winner} wins!`);
+          renderBoard();
+          return;
+        }
+
+        if (board.every(Boolean)) {
+          gameOver = true;
+          updateStatus('It\'s a draw!');
+          renderBoard();
+          return;
+        }
+
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        updateStatus(`Player ${currentPlayer}'s turn`);
+        renderBoard();
+      }
+
+      cells.forEach((cell) => {
+        cell.addEventListener('click', () => handleMove(Number(cell.dataset.index)));
+      });
+
+      resetBtn.addEventListener('click', resetGame);
+
+      renderBoard();
+    </script>
+  </body>
+</html>
